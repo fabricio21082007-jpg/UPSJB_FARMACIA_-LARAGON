@@ -1,8 +1,20 @@
 @extends('template.administrador')
 
-@section('titulo', 'Categorías')
-@section('subtitulo', 'Clasificación de los medicamentos')
 
+
+@section('title', 'CATEGORIAS')
+
+@section('name-section', 'CATEGORIAS')
+
+
+
+@section('descripcion', 'Listado de categorías')
+
+@section('item-breadcrumb', 'Inicio')
+
+@section('section-breadcrumble', 'Categorías')
+
+@section('module-breadcrumb', 'Configuraciones')
 @section('contenido')
 <div class="card bg-white border-0 shadow-sm border-5 border-top border-secondary">
     <div class="card-header bg-white">
