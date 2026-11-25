@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['categoria_id', 'nombre', 'precio', 'stock'])]
+#[Fillable(['categoria_id', 'nombre', 'precio', 'stock', 'imagen'])]
 class Medicamento extends Model
 {
     protected function casts(): array

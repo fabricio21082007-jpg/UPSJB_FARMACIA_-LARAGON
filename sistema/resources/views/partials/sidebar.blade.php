@@ -17,11 +17,11 @@
 
       <p class="sidebar-section-title text-white-50 text-uppercase fw-semibold px-3 mb-2 mt-2">Principal</p>
       <ul class="nav flex-column gap-1 mb-1">
+        {{-- Enlace del menú: route() arma la URL; request()->is() marca el módulo activo --}}
         <li class="nav-item">
-          <a href="{{ route('inicio') }}"
-             @class(['nav-link sidebar-link text-white-50 rounded-4',
-                     'px-3 py-2 d-flex align-items-center gap-2',
-                     'active_item' => request()->routeIs('inicio')])>
+          <a href="{{ route('dashboard.index') }}"
+             class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is('/') ? 'active_item' : null }}"
+             aria-current="{{ request()->is('/') ? 'page' : null }}">
             <i class="bi bi-house-door fs-6"></i><span class="small fw-medium">Dashboard</span>
           </a>
         </li>
@@ -34,18 +34,25 @@
 
       <p class="sidebar-section-title text-white-50 text-uppercase fw-semibold px-3 mb-2 mt-3">Gestión</p>
       <ul class="nav flex-column gap-1 mb-1">
-            <li class="nav-item">
-            <a href="" class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2" aria-current="">
+        {{-- El asterisco de 'medicamentos*' mantiene marcado el enlace en /medicamentos/create y /medicamentos/5/edit --}}
+        <li class="nav-item">
+          <a href="{{ route('medicamentos.index') }}"
+             class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is(['medicamentos*']) ? 'active_item' : null }}"
+             aria-current="{{ request()->is(['medicamentos*']) ? 'page' : null }}">
             <i class="bi bi-box-seam fs-6"></i><span class="small fw-medium">Medicamentos</span>
           </a>
         </li>
         <li class="nav-item">
-          <a href="" class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2" aria-current="">
+          <a href="{{ route('clientes.index') }}"
+             class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is(['clientes*']) ? 'active_item' : null }}"
+             aria-current="{{ request()->is(['clientes*']) ? 'page' : null }}">
             <i class="bi bi-people fs-6"></i><span class="small fw-medium">Clientes</span>
           </a>
         </li>
         <li class="nav-item">
-          <a href="" class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2" aria-current="">
+          <a href="{{ route('ventas.index') }}"
+             class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is(['ventas*']) ? 'active_item' : null }}"
+             aria-current="{{ request()->is(['ventas*']) ? 'page' : null }}">
             <i class="bi bi-cart3 fs-6"></i><span class="small fw-medium">Ventas</span>
           </a>
         </li>
@@ -54,20 +61,23 @@
       <p class="sidebar-section-title text-white-50 text-uppercase fw-semibold px-3 mb-2 mt-3">Configuraciones</p>
       <ul class="nav flex-column gap-1">
         <li class="nav-item">
-          <a href="" class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2" aria-current="">
+          <a href="{{ route('roles.index') }}"
+             class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is(['roles*']) ? 'active_item' : null }}"
+             aria-current="{{ request()->is(['roles*']) ? 'page' : null }}">
             <i class="bi bi-shield fs-6"></i><span class="small fw-medium">Roles</span>
           </a>
         </li>
         <li class="nav-item">
-          <a href="" class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2" aria-current="">
+          <a href="{{ route('usuarios.index') }}"
+             class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is(['usuarios*']) ? 'active_item' : null }}"
+             aria-current="{{ request()->is(['usuarios*']) ? 'page' : null }}">
             <i class="bi bi-person-gear fs-6"></i><span class="small fw-medium">Usuarios</span>
           </a>
         </li>
         <li class="nav-item">
           <a href="{{ route('categorias.index') }}"
-             @class(['nav-link sidebar-link text-white-50 rounded-4',
-                     'px-3 py-2 d-flex align-items-center gap-2',
-                     'active_item' => request()->routeIs('categorias.*')])>
+             class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is(['categorias*']) ? 'active_item' : null }}"
+             aria-current="{{ request()->is(['categorias*']) ? 'page' : null }}">
             <i class="bi bi-grid fs-6"></i><span class="small fw-medium">Categorías</span>
           </a>
         </li>
@@ -76,6 +86,7 @@
     </nav>
 
     <div class="dropup" style="border-top:1px solid rgba(255,255,255,.1)">
+      @php($user = auth()->user())
       <button class="btn w-100 d-flex align-items-center gap-2 text-start px-3 py-3 sidebar-user-btn"
               id="userMenuToggle"
               type="button"
@@ -84,11 +95,12 @@
               aria-haspopup="true"
               aria-label="Opciones de cuenta">
         <div class="user-avatar rounded-circle bg-primary d-flex align-items-center justify-content-center flex-shrink-0">
-          <span class="text-white fw-bold lh-1">SJ</span>
+          <span class="text-white fw-bold lh-1">{{ mb_strtoupper(mb_substr($user->name, 0, 2)) }}</span>
         </div>
         <div class="lh-sm overflow-hidden flex-grow-1 text-start">
-          <div class="text-white fw-semibold small">Administrador</div>
-          <div class="text-white-50" style="font-size:.7rem">admin@sanjuan.com</div>
+          <div class="text-white fw-semibold small">{{ $user->name }}</div>
+          <div class="text-white-50" style="font-size:.7rem">{{ $user->email }}</div>
+          <div class="text-white-50" style="font-size:.7rem">{{ $user->rol->nombre }}</div>
         </div>
         <i class="bi bi-chevron-up text-white-50 small user-menu-chevron"></i>
       </button>
@@ -96,12 +108,12 @@
         <li class="px-3 py-2 border-bottom" style="background:var(--bs-tertiary-bg)">
           <div class="d-flex align-items-center gap-2">
             <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center flex-shrink-0" style="width:40px;height:40px">
-              <span class="text-white fw-bold small">SJ</span>
+              <span class="text-white fw-bold small">{{ mb_strtoupper(mb_substr($user->name, 0, 2)) }}</span>
             </div>
             <div class="lh-sm overflow-hidden">
-              <div class="fw-semibold small">Administrador</div>
-              <div class="text-secondary" style="font-size:.7rem">admin@sanjuan.com</div>
-              <span class="badge bg-primary-subtle text-primary mt-1 px-2 rounded-pill" style="font-size:.6rem;font-weight:600">Super Admin</span>
+              <div class="fw-semibold small">{{ $user->name }}</div>
+              <div class="text-secondary" style="font-size:.7rem">{{ $user->email }}</div>
+              <span class="badge bg-primary-subtle text-primary mt-1 px-2 rounded-pill" style="font-size:.6rem;font-weight:600">{{ $user->rol->nombre }}</span>
             </div>
           </div>
         </li>

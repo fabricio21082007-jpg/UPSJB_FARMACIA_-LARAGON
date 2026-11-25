@@ -13,12 +13,12 @@ class CategoriaController extends Controller
         $categorias = Categoria::withCount('medicamentos')
             ->orderBy('nombre')->get();
 
-        return view('categorias.index', compact('categorias'));
+        return view('settings.categorias.index', compact('categorias'));
     }
 
     public function create()
     {
-        return view('categorias.create');
+        return view('settings.categorias.create');
     }
 
     public function store(Request $request)
@@ -36,7 +36,7 @@ class CategoriaController extends Controller
 
     public function edit(Categoria $categoria)
     {
-        return view('categorias.edit', compact('categoria'));
+        return view('settings.categorias.edit', compact('categoria'));
     }
 
     public function update(Request $request, Categoria $categoria)
@@ -57,7 +57,7 @@ class CategoriaController extends Controller
     {
         // Regla del diagrama: Categoria 1 -- 0..* Medicamento (restrictOnDelete)
         if ($categoria->medicamentos()->exists()) {
-            return back()->with('error',
+            return to_route('categorias.index')->with('error',
                 'No se puede eliminar: tiene medicamentos registrados.');
         }
 

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="San Juan – Sistema de Venta de Medicamentos">
-    <title>@yield('titulo', 'Dashboard') | FARM SJB</title>
+    <title>@yield('title', 'Dashboard') | FARM SJB</title>
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     @stack('estilos')
@@ -20,17 +20,20 @@
             <div class="container-fluid p-0">
                 <div class="d-flex align-items-center justify-content-between
                             flex-column flex-sm-row gap-2 mb-4">
-                    <p class="text-secondary mb-0">@yield('subtitulo')</p>
+                    {{-- Descripción de la página --}}
+                    <p class="text-secondary mb-0">@yield('description')</p>
+
+                    {{-- Ruta de navegación: item › sección › módulo --}}
                     <ol class="breadcrumb mb-0 small">
+                        <li class="breadcrumb-item">@yield('item_section', 'Inicio')</li>
                         <li class="breadcrumb-item">
-                            <a href="{{ route('inicio') }}">Inicio</a>
+                            <a href="@yield('route_section', route('dashboard.index'))">@yield('section', 'Dashboard')</a>
                         </li>
-                        <li class="breadcrumb-item active">@yield('titulo', 'Dashboard')</li>
+                        <li class="breadcrumb-item active">@yield('module', 'Principal')</li>
                     </ol>
                 </div>
 
-                @include('partials.alertas')
-                @yield('contenido')
+                @yield('content')
             </div>
         </main>
     </div>
