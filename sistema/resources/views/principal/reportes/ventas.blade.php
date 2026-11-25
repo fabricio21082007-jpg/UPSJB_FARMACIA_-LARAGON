@@ -69,7 +69,8 @@
   {{-- ── 3. Gráfico del rango --}}
   <div class="card bg-white border-0 shadow-sm border-5 border-top border-secondary p-3 mb-3">
     <h2 class="h6 fw-bold">Total vendido por día (S/)</h2>
-    <canvas id="chartReport" height="90"></canvas>
+    {{-- Altura fija: el gráfico se ve igual en pantallas angostas y anchas --}}
+    <div style="height:260px"><canvas id="chartReport"></canvas></div>
   </div>
 
   {{-- ── 4. Detalle --}}
@@ -111,7 +112,7 @@
     new Chart(document.getElementById('chartReport'), {
       type: 'bar',
       data: { labels, datasets: [{ label: 'Total (S/)', data: values, backgroundColor: '#ff0a41' }] },
-      options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+      options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
     });
   </script>
 @endpush

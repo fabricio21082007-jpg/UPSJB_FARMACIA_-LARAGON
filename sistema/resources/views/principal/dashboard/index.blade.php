@@ -48,13 +48,15 @@
     <div class="col-lg-8">
       <div class="card bg-white border-0 shadow-sm border-5 border-top border-secondary h-100 p-3">
         <h2 class="h6 fw-bold">Ventas de los últimos 7 días (S/)</h2>
-        <canvas id="chartDays" height="120"></canvas>
+        {{-- Altura fija: en pantallas anchas el gráfico no se achata ni deja espacio vacío --}}
+        <div style="height:300px"><canvas id="chartDays"></canvas></div>
       </div>
     </div>
     <div class="col-lg-4">
       <div class="card bg-white border-0 shadow-sm border-5 border-top border-secondary h-100 p-3">
         <h2 class="h6 fw-bold">Ventas del mes por categoría</h2>
-        <canvas id="chartCategories"></canvas>
+        {{-- Misma altura que el gráfico de líneas: la dona ya no crece con el ancho de la pantalla --}}
+        <div style="height:300px"><canvas id="chartCategories"></canvas></div>
       </div>
     </div>
     <div class="col-12">
@@ -85,7 +87,7 @@
       data: { labels: dias,
               datasets: [{ label: 'Ventas (S/)', data: totales, borderColor: PRIMARY,
                            backgroundColor: 'rgba(255,10,65,.12)', fill: true, tension: .3 }] },
-      options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+      options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
     });
 
     // Gráfico de dona: ventas por categoría
@@ -94,7 +96,7 @@
       data: { labels: porCategoria.map(c => c.nombre),
               datasets: [{ data: porCategoria.map(c => c.total),
                            backgroundColor: [PRIMARY, DARK, GRAY, '#ff8aa5', '#9ca3af', '#ffd0db', '#7a0520', '#d1d5db'] }] },
-      options: { plugins: { legend: { position: 'bottom' } } }
+      options: { maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } } }
     });
 
     // Gráfico de barras horizontales: los 5 más vendidos
