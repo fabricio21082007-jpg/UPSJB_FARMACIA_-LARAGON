@@ -97,6 +97,8 @@
               <i class="bi bi-eye text-secondary"></i>
             </button>
           </div>
+          {{-- Mensaje del servidor si la contraseña llega vacía --}}
+          @error('password') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
         </div>
 
         <div class="form-check mb-4">

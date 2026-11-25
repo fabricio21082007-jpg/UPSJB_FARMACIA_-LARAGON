@@ -26,8 +26,9 @@ class SaleRoleTest extends TestCase
             ->assertSee('Dashboard')
             ->assertSee('Clientes')
             ->assertSee('Ventas')
+            ->assertSee('Carlos Mendoza')
             ->assertDontSee('Reportes')
-            ->assertDontSee('Medicamentos')
+            ->assertDontSee('href="'.route('medicamentos.index').'"', false)
             ->assertDontSee('Configuraciones')
             ->assertDontSee('Categorías')
             ->assertDontSee('Roles')
@@ -44,12 +45,31 @@ class SaleRoleTest extends TestCase
             ->get(route('ventas.index'))
             ->assertOk()
             ->assertSee('Reportes')
-            ->assertSee('Medicamentos')
+            ->assertSee('href="'.route('medicamentos.index').'"', false)
             ->assertSee('Configuraciones')
             ->assertSee('Categorías')
             ->assertSee('Roles')
             ->assertSee('Usuarios')
             ->assertSee('Anular');
+    }
+
+    public function test_pharmacist_sees_medicines_and_reports_but_not_administrator_options(): void
+    {
+        $pharmacist = $this->createUser(
+            'Químico farmacéutico',
+            'quimico@sanjuan.com',
+            'Maria Lopez',
+            '24681357',
+        );
+        $this->createSaleFor($pharmacist);
+
+        $this->actingAs($pharmacist)
+            ->get(route('ventas.index'))
+            ->assertOk()
+            ->assertSee('Reportes')
+            ->assertSee('href="'.route('medicamentos.index').'"', false)
+            ->assertDontSee('Configuraciones')
+            ->assertDontSee('Anular');
     }
 
     public function test_sale_form_shows_the_authenticated_seller_without_a_user_list(): void
@@ -96,6 +116,11 @@ class SaleRoleTest extends TestCase
             'id' => $medicine->id,
             'stock' => 3,
         ]);
+
+        $this->actingAs($cashier)
+            ->get(route('ventas.index'))
+            ->assertOk()
+            ->assertSee('Carlos Mendoza');
     }
 
     private function createUser(string $roleName, string $email, string $name, string $dni): User

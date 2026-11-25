@@ -124,3 +124,15 @@ body { background-color: #f4f6f8; }
 .login-input-group:focus-within .input-group-text,
 .login-input-group:focus-within .form-control { border-color: var(--bs-primary); }
 .login-input-group .form-control.is-invalid ~ .input-group-text { border-color: var(--bs-danger); }
+
+/* Dashboard: ícono de las tarjetas de indicadores */
+.kpi-icon {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border-radius: var(--bs-border-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}

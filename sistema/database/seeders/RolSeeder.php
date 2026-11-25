@@ -8,18 +8,23 @@ use Illuminate\Database\Seeder;
 class RolSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Crea los tres roles del sistema.
+     * Los nombres deben ser exactos (con tilde): se usan en web.php y en el menú.
      */
     public function run(): void
     {
         $roles = [
             [
                 'nombre' => 'Administrador',
-                'descripcion' => 'Acceso administrativo al sistema.',
+                'descripcion' => 'Acceso total al sistema.',
             ],
             [
                 'nombre' => 'Químico farmacéutico',
-                'descripcion' => 'Rol para pruebas.',
+                'descripcion' => 'Controla los medicamentos, registra ventas y revisa los reportes.',
+            ],
+            [
+                'nombre' => 'Cajero',
+                'descripcion' => 'Registra clientes y ventas.',
             ],
         ];
 

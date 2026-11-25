@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Rol;
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,32 +10,18 @@ class DatabaseSeeder extends Seeder
     use WithoutModelEvents;
 
     /**
-     * Seed the application's database.
+     * Llena la base de datos con datos de prueba: php artisan migrate:fresh --seed
+     * El orden importa: cada seeder usa los registros del anterior.
      */
     public function run(): void
     {
-        $role = Rol::query()->firstOrCreate(
-            ['nombre' => 'Administrador'],
-            ['descripcion' => 'Acceso administrativo al sistema.'],
-        );
-
-        $email = 'admin@sanjuan.com';
-        $user = User::query()->firstOrNew(['email' => $email]);
-
-        if (! $user->exists) {
-            do {
-                $dni = (string) random_int(10000000, 99999999);
-            } while (User::query()->where('dni', $dni)->exists());
-
-            $user->dni = $dni;
-        }
-
-        $user->fill([
-            'name' => 'Administrador',
-            'rol_id' => $role->id,
-            'password' => 'password',
+        $this->call([
+            RolSeeder::class,          // Administrador, Químico farmacéutico y Cajero
+            UserSeeder::class,         // un usuario por rol (contraseña: password)
+            CategoriaSeeder::class,
+            MedicamentoSeeder::class,
+            ClienteSeeder::class,
+            VentaSeeder::class,        // 60 ventas de los últimos 90 días
         ]);
-
-        $user->save();
     }
 }

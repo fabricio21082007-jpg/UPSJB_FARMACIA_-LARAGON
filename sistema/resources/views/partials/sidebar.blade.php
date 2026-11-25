@@ -25,9 +25,12 @@
             <i class="bi bi-house-door fs-6"></i><span class="small fw-medium">Dashboard</span>
           </a>
         </li>
+        {{-- Reportes: Administrador y Químico farmacéutico --}}
         @if (auth()->user()->hasRole('Administrador', 'Químico farmacéutico'))
           <li class="nav-item">
-            <a href="" class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2" aria-current="">
+            <a href="{{ route('reportes.ventas') }}"
+               class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is(['reportes*']) ? 'active_item' : null }}"
+               aria-current="{{ request()->is(['reportes*']) ? 'page' : null }}">
               <i class="bi bi-bar-chart fs-6"></i><span class="small fw-medium">Reportes</span>
             </a>
           </li>

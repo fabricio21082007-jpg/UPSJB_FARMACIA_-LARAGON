@@ -9,29 +9,45 @@ use Illuminate\Database\Seeder;
 class UserSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Crea un usuario de prueba por rol (dos cajeros). Todos con la contraseña "password".
      */
     public function run(): void
     {
-        // ['Administrador' => 1, 'Químico farmacéutico' => 2, ...]
+        // ['Administrador' => 1, 'Químico farmacéutico' => 2, 'Cajero' => 3]
         $roles = Rol::query()->pluck('id', 'nombre');
 
         $users = [
             [
                 'rol' => 'Administrador',
-                'name' => 'Juan Perez',
-                'dni' => '12345678',
+                'name' => 'Administrador',
+                'dni' => '40123456',
                 'telefono' => '987654321',
                 'colegiatura' => null,
-                'email' => 'juan@sanjuan.com',
+                'email' => 'admin@sanjuan.com',
             ],
             [
                 'rol' => 'Químico farmacéutico',
-                'name' => 'Maria Lopez',
-                'dni' => '87654321',
-                'telefono' => '123456789',
+                'name' => 'Rosa Quispe Huamán',
+                'dni' => '41234567',
+                'telefono' => '956123478',
+                'colegiatura' => 'CQFP-04587',
+                'email' => 'rquispe@sanjuan.com',
+            ],
+            [
+                'rol' => 'Cajero',
+                'name' => 'Carlos Mendoza Ríos',
+                'dni' => '42345678',
+                'telefono' => '945789123',
                 'colegiatura' => null,
-                'email' => 'maria@sanjuan.com',
+                'email' => 'cmendoza@sanjuan.com',
+            ],
+            [
+                'rol' => 'Cajero',
+                'name' => 'Lucía Torres Salazar',
+                'dni' => '43456789',
+                'telefono' => '934567812',
+                'colegiatura' => null,
+                'email' => 'ltorres@sanjuan.com',
             ],
         ];
 
