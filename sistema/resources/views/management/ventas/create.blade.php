@@ -35,16 +35,9 @@
                 </div>
 
                 <div class="col-12 col-md-6 mb-3">
-                    <label for="user_id" class="form-label">Vendedor</label>
-                    <select name="user_id" id="user_id" class="form-select @error('user_id') is-invalid @enderror">
-                        <option value="">-- Seleccione --</option>
-                        @foreach ($usuarios as $usuario)
-                            <option value="{{ $usuario->id }}" @selected(old('user_id') == $usuario->id)>{{ $usuario->name }}</option>
-                        @endforeach
-                    </select>
-                    @error('user_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <label for="vendedor" class="form-label">Vendedor</label>
+                    <input type="text" id="vendedor" class="form-control"
+                           value="{{ auth()->user()->name }}" disabled>
                 </div>
             </div>
 

@@ -37,6 +37,14 @@ class User extends Authenticatable
         return $this->belongsTo(Rol::class);
     }
 
+    /**
+     * Comprueba si el usuario tiene alguno de los roles indicados.
+     */
+    public function hasRole(string ...$roles): bool
+    {
+        return in_array($this->rol?->nombre, $roles, true);
+    }
+
     public function ventas(): HasMany
     {
         return $this->hasMany(Venta::class);

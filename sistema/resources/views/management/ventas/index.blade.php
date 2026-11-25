@@ -53,14 +53,16 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="{{ route('ventas.show', $venta) }}">Ver detalle</a></li>
-                                <li>
-                                    <form action="{{ route('ventas.destroy', $venta) }}" method="POST"
-                                        onsubmit="return confirm('¿Seguro que desea anular esta venta? El stock será devuelto.')">
-                                        @csrf
-                                        @method('DELETE') {{-- verbo real: destroy() --}}
-                                        <button type="submit" class="dropdown-item text-danger">Anular</button>
-                                    </form>
-                                </li>
+                                @if (auth()->user()->hasRole('Administrador'))
+                                    <li>
+                                        <form action="{{ route('ventas.destroy', $venta) }}" method="POST"
+                                            onsubmit="return confirm('¿Seguro que desea anular esta venta? El stock será devuelto.')">
+                                            @csrf
+                                            @method('DELETE') {{-- verbo real: destroy() --}}
+                                            <button type="submit" class="dropdown-item text-danger">Anular</button>
+                                        </form>
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                     </td>

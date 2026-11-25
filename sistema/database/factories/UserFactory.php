@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Rol;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -25,7 +26,16 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
+            // Solo se ejecuta si no pasas 'rol_id' en create([...]).
+            // Usa el rol Administrador (lo crea si la tabla roles está vacía, p. ej. en tests).
+            'rol_id' => fn () => Rol::query()->firstOrCreate(
+                ['nombre' => 'Administrador'],
+                ['descripcion' => 'Acceso administrativo al sistema.'],
+            )->id,
             'name' => fake()->name(),
+            'dni' => fake()->unique()->numerify('########'),
+            'telefono' => fake()->numerify('9########'),
+            'colegiatura' => null,
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),

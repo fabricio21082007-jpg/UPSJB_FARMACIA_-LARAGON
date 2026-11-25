@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use App\Models\Medicamento;
-use App\Models\User;
 use App\Models\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,10 +23,9 @@ class VentaController extends Controller
     public function create()
     {
         $clientes = Cliente::orderBy('nombre')->get();
-        $usuarios = User::orderBy('name')->get();
         $medicamentos = Medicamento::where('stock', '>', 0)->orderBy('nombre')->get();
 
-        return view('management.ventas.create', compact('clientes', 'usuarios', 'medicamentos'));
+        return view('management.ventas.create', compact('clientes', 'medicamentos'));
     }
 
     // Guardar la venta con sus detalles
@@ -35,7 +33,6 @@ class VentaController extends Controller
     {
         $request->validate([
             'cliente_id' => 'required|exists:clientes,id',
-            'user_id' => 'required|exists:users,id',
             'items' => 'required|array|min:1',
             'items.*.medicamento_id' => 'required|distinct|exists:medicamentos,id',
             'items.*.cantidad' => 'required|integer|min:1',
@@ -49,7 +46,7 @@ class VentaController extends Controller
             // 1. Crear la venta (el total se calcula después)
             $venta = Venta::create([
                 'cliente_id' => $request->cliente_id,
-                'user_id' => $request->user_id,
+                'user_id' => auth()->id(),
                 'fecha' => now(),
                 'total' => 0,
                 'igv' => 0,

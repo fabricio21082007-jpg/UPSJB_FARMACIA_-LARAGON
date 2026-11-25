@@ -25,23 +25,27 @@
             <i class="bi bi-house-door fs-6"></i><span class="small fw-medium">Dashboard</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a href="" class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2" aria-current="">
-            <i class="bi bi-bar-chart fs-6"></i><span class="small fw-medium">Reportes</span>
-          </a>
-        </li>
+        @if (auth()->user()->hasRole('Administrador', 'Químico farmacéutico'))
+          <li class="nav-item">
+            <a href="" class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2" aria-current="">
+              <i class="bi bi-bar-chart fs-6"></i><span class="small fw-medium">Reportes</span>
+            </a>
+          </li>
+        @endif
       </ul>
 
       <p class="sidebar-section-title text-white-50 text-uppercase fw-semibold px-3 mb-2 mt-3">Gestión</p>
       <ul class="nav flex-column gap-1 mb-1">
         {{-- El asterisco de 'medicamentos*' mantiene marcado el enlace en /medicamentos/create y /medicamentos/5/edit --}}
-        <li class="nav-item">
-          <a href="{{ route('medicamentos.index') }}"
-             class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is(['medicamentos*']) ? 'active_item' : null }}"
-             aria-current="{{ request()->is(['medicamentos*']) ? 'page' : null }}">
-            <i class="bi bi-box-seam fs-6"></i><span class="small fw-medium">Medicamentos</span>
-          </a>
-        </li>
+        @if (auth()->user()->hasRole('Administrador', 'Químico farmacéutico'))
+          <li class="nav-item">
+            <a href="{{ route('medicamentos.index') }}"
+               class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is(['medicamentos*']) ? 'active_item' : null }}"
+               aria-current="{{ request()->is(['medicamentos*']) ? 'page' : null }}">
+              <i class="bi bi-box-seam fs-6"></i><span class="small fw-medium">Medicamentos</span>
+            </a>
+          </li>
+        @endif
         <li class="nav-item">
           <a href="{{ route('clientes.index') }}"
              class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is(['clientes*']) ? 'active_item' : null }}"
@@ -58,30 +62,32 @@
         </li>
       </ul>
 
-      <p class="sidebar-section-title text-white-50 text-uppercase fw-semibold px-3 mb-2 mt-3">Configuraciones</p>
-      <ul class="nav flex-column gap-1">
-        <li class="nav-item">
-          <a href="{{ route('roles.index') }}"
-             class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is(['roles*']) ? 'active_item' : null }}"
-             aria-current="{{ request()->is(['roles*']) ? 'page' : null }}">
-            <i class="bi bi-shield fs-6"></i><span class="small fw-medium">Roles</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('usuarios.index') }}"
-             class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is(['usuarios*']) ? 'active_item' : null }}"
-             aria-current="{{ request()->is(['usuarios*']) ? 'page' : null }}">
-            <i class="bi bi-person-gear fs-6"></i><span class="small fw-medium">Usuarios</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('categorias.index') }}"
-             class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is(['categorias*']) ? 'active_item' : null }}"
-             aria-current="{{ request()->is(['categorias*']) ? 'page' : null }}">
-            <i class="bi bi-grid fs-6"></i><span class="small fw-medium">Categorías</span>
-          </a>
-        </li>
-      </ul>
+      @if (auth()->user()->hasRole('Administrador'))
+        <p class="sidebar-section-title text-white-50 text-uppercase fw-semibold px-3 mb-2 mt-3">Configuraciones</p>
+        <ul class="nav flex-column gap-1">
+          <li class="nav-item">
+            <a href="{{ route('roles.index') }}"
+               class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is(['roles*']) ? 'active_item' : null }}"
+               aria-current="{{ request()->is(['roles*']) ? 'page' : null }}">
+              <i class="bi bi-shield fs-6"></i><span class="small fw-medium">Roles</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('usuarios.index') }}"
+               class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is(['usuarios*']) ? 'active_item' : null }}"
+               aria-current="{{ request()->is(['usuarios*']) ? 'page' : null }}">
+              <i class="bi bi-person-gear fs-6"></i><span class="small fw-medium">Usuarios</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('categorias.index') }}"
+               class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is(['categorias*']) ? 'active_item' : null }}"
+               aria-current="{{ request()->is(['categorias*']) ? 'page' : null }}">
+              <i class="bi bi-grid fs-6"></i><span class="small fw-medium">Categorías</span>
+            </a>
+          </li>
+        </ul>
+      @endif
 
     </nav>
 
