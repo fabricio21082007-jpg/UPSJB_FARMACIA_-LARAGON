@@ -53,6 +53,15 @@
         <button class="btn btn-primary text-white flex-grow-1"><i class="bi bi-funnel"></i> Filtrar</button>
         <a href="{{ route('reportes.ventas') }}" class="btn btn-light" title="Quitar filtros"><i class="bi bi-x-lg"></i></a>
       </div>
+<div class="col-12 d-flex gap-2 justify-content-end">
+        <button type="submit" formaction="{{ route('reportes.ventas.pdf') }}" class="btn btn-outline-primary">
+          <i class="bi bi-file-earmark-pdf"></i> PDF
+        </button>
+        <button type="submit" formaction="{{ route('reportes.ventas.excel') }}" class="btn btn-outline-success">
+          <i class="bi bi-file-earmark-excel"></i> Excel
+        </button>
+      </div>
+
       @error('desde') <div class="col-12 text-danger small">{{ $message }}</div> @enderror
       @error('hasta') <div class="col-12 text-danger small">{{ $message }}</div> @enderror
     </form>

@@ -32,11 +32,12 @@ Route::middleware('auth')->group(function () {
         ->middlewareFor('destroy', 'role:Administrador');   // solo el administrador anula ventas
 
     // Administrador y Químico farmacéutico
-    Route::middleware('role:Administrador,Químico farmacéutico')->group(function () {
+        Route::middleware('role:Administrador,Químico farmacéutico')->group(function () {
         Route::resource('medicamentos', MedicamentoController::class)->except('show');
         Route::get('/reportes/ventas', [ReporteController::class, 'ventas'])->name('reportes.ventas');
+        Route::get('/reportes/ventas/pdf', [ReporteController::class, 'ventasPdf'])->name('reportes.ventas.pdf');
+        Route::get('/reportes/ventas/excel', [ReporteController::class, 'ventasExcel'])->name('reportes.ventas.excel');
     });
-
     // Solo el administrador: Configuraciones
     Route::middleware('role:Administrador')->group(function () {
         // parameters(): el parámetro de la ruta se llama {rol}, igual que el modelo Rol

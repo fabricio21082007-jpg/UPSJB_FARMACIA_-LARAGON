@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     @stack('estilos')
 </head>
+<link rel="manifest" href="{{ asset('manifest.json') }}">
+<meta name="theme-color" content="#ff0a41">
+<link rel="apple-touch-icon" href="{{ asset('icons/icon-192.png') }}">
 <body>
 <div id="app-wrapper" class="d-flex">
     @include('partials.sidebar')
@@ -46,4 +49,9 @@
 <script src="{{ asset('js/app.js') }}"></script>
 @stack('scripts')
 </body>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
+  }
+</script>
 </html>
